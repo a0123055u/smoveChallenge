@@ -1,8 +1,61 @@
 var myApp = angular.module('myBookingApp',[]);
-myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
+myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
     
    
-    
+    $scope.carList=[];
+	$scope.myVariable=0;
+	 $scope.myVariableTest=0;
+	 var sumOfCar=[];
+	 var refresh = function(){
+	 console.log('got into server');
+            $http.get('/BookingData').success(function(response){
+            console.log('got data from server');
+            $scope.carList1=response;
+			// $scope.carList1=response[0];
+			$scope.products=response;
+			//console.log(response.data);
+			
+			
+           
+            $scope.contact=[];
+			var carHoursUsedMap = [] ;
+			
+			 angular.forEach($scope.products, function(value, key){
+					if(value.car!=null){
+					var hoursUsed= (value.end-value.start)/4;
+					sumOfCar.push(value.car);
+					carHoursUsedMap.push({carId:value.car,hrs:hoursUsed});
+					}
+					
+                console.log(carHoursUsedMap);
+                
+                    
+				
+   });
+				$scope.sumOfCar=sumOfCar.sort(function(a,b){
+				return a-b;
+				});
+					console.log($scope.sumOfCar);
+   
+				   var counts = {};
+
+				for(var i = 0; i< $scope.sumOfCar.length; i++) {
+					var num = $scope.sumOfCar[i];
+					counts[num] = counts[num] ? counts[num]+1 : 1;
+				}
+				var countMap = [];
+				
+				for(var t=1;t<140;t++){
+						console.log("Count of "+t+" -"+ counts[t]);
+						countMap.push({id:t,count:counts[t]});
+						//console.log(" count of "+counts[t]);
+						}
+						$scope.counts=countMap;
+				
+            });
+        
+	 }
+	 refresh();
     
 //Used this method to consume the REST API and display them to user.
     $scope.getBooking = function(time){    
@@ -12,9 +65,9 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
 			var unixEndTime = unixStartTime+900;
             $http.get('https://challenge.smove.sg/availability?startTime='+unixStartTime+'&endTime='+unixEndTime).success(function(response){
             console.log('got data from server');
-            $scope.carList=[];
-			$scope.products=response;
+           	$scope.products=response;
 			console.log(response.data);
+			$scope.myVariable=11111;
 			
 			
            
@@ -61,9 +114,9 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
       
     };
 	
-	$scope.bookCar= function(id,available_cars,location,time){
+	$scope.bookCar= function(id,available_cars,location,time,carIndex){
 	console.log("@@@@@@@@");
-	console.log("id"+" "+id+"available_cars"+" "+available_cars+"location"+" "+ location+"time"+" "+time);
+	console.log("id"+" "+id+"available_cars"+" "+available_cars+"location"+" "+ location+"time"+" "+time+" carIndex"+carIndex);
 	var lat = location[0];
 		 var lng=location[1];
 		var carList1 =[];
@@ -72,6 +125,7 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
 		 availablecars--;
 		 var bookCount=available_cars-availablecars;
 		 var carId=id;
+		 var carIndex1= carIndex;
 		carList1.push({
             id:carId, 
             availableCars:availablecars,
@@ -80,47 +134,36 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
 			longitute:lng,
 			noOfBooking:bookCount});
 			var param =JSON.stringify(carList1);
+			
             console.log("Input to insert"+param);
                 $http.post('/booking',param).success(function(response){
+				$scope.products=response;
 				
-				console.log("RESPONSE FROM SERVER@@@@ after Insert " + response+" "+$scope.carList);
+				 angular.forEach($scope.products, function(value, key){
+				 console.log(value);
+				 $scope.test=true;
+				 $scope.myVariableTest=value;
+				alert("Congrats your Booking have been placed Successful !! , Cars Available for carId after booking "+carIndex1+" is "+value);
+				//$scope.carList.push({'data':key,'value':value});
+				 });
+				
+				console.log("RESPONSE FROM SERVER@@@@ after Insert "+response.data + response+" "+$scope.carList);
 				});
                // refresh();		 
 	
 	}   
+	
 	$scope.getBookingData = function(time){ 
-					console.log('got into server');
-            $http.get('/BookingData').success(function(response){
-            console.log('got data from server');
-            $scope.carList1=response;
-			// $scope.carList1=response[0];
-			$scope.products=response;
-			console.log(response);
-			
-			
-           
-            $scope.contact=[];
-			
-			 angular.forEach($scope.products, function(value, key){
-                var val = key;
-                //console.log("var"+val)
-					//$scope.carList1.push({'data':key,'value':value});
-                   // $scope.carList1.push({'id':value.id,'carNo':value.car,'end':value.end,'start':value.start,'startLocation':value.start_location,'endLocation':value.end_location});
-                
-                    /* "car": 61,
-    "end": 56,
-    "end_location": 36,
-    "id": 44,
-    "start": 0,
-    "start_location": 36 */
-                
-                //console.log("record"+$scope.records)
-                //$scope.products=$scope.records;
-				
-   });
-            });
-        
+					
     };
+	$scope.$watch('myVariableTest',function(newValue,oldValue){
+	console.log("Watched");
+	$scope.myVariableTest=newValue;
+	},true);
+	
+
+
+
         
 	
 }]);

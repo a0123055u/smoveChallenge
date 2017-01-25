@@ -47,7 +47,7 @@ console.log("#############");
    db.booking.insert(val, function(err,doc){
         if(!err){
 		console.log("Inserted into Db");
-		res.json(doc);
+		res.json(doc.carsAvailable);
 		
 		}           
 		else
