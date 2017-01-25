@@ -3,10 +3,13 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
     
    
     $scope.carList=[];
-	$scope.myVariable=0;
+	
 	 $scope.myVariableTest=0;
 	 var sumOfCar=[];
-	 var refresh = function(){
+	 $scope.refresh = function(){
+	 $scope.bookingFlag=false;
+	 $scope.dataAnalysisFlag=true;
+	 $scope.detailedAnalysis=false;
 	 console.log('got into server');
             $http.get('/BookingData').success(function(response){
             console.log('got data from server');
@@ -17,7 +20,8 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 			
 			
            
-            $scope.contact=[];
+           $scope.sumOfCar=[];
+		   sumOfCar=[];
 			var carHoursUsedMap = [] ;
 			
 			 angular.forEach($scope.products, function(value, key){
@@ -27,7 +31,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 					carHoursUsedMap.push({carId:value.car,hrs:hoursUsed});
 					}
 					
-                console.log(carHoursUsedMap);
+               // console.log(carHoursUsedMap);
                 
                     
 				
@@ -35,7 +39,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 				$scope.sumOfCar=sumOfCar.sort(function(a,b){
 				return a-b;
 				});
-					console.log($scope.sumOfCar);
+					//console.log($scope.sumOfCar);
    
 				   var counts = {};
 
@@ -55,7 +59,14 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
             });
         
 	 }
-	 refresh();
+	
+	$scope.getDataAnalysis= function(){
+	 $scope.bookingFlag=false;
+	 $scope.dataAnalysisFlag=false;
+	 $scope.detailedAnalysis=true;
+	
+	
+	}
     
 //Used this method to consume the REST API and display them to user.
     $scope.getBooking = function(time){    
@@ -63,11 +74,14 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 			var millTime= date.getTime();
 			var unixStartTime = millTime/1000;
 			var unixEndTime = unixStartTime+900;
+			 $scope.bookingFlag=true;
+			 $scope.dataAnalysisFlag=false;
+			 $scope.detailedAnalysis=false;
             $http.get('https://challenge.smove.sg/availability?startTime='+unixStartTime+'&endTime='+unixEndTime).success(function(response){
             console.log('got data from server');
            	$scope.products=response;
 			console.log(response.data);
-			$scope.myVariable=11111;
+			
 			
 			
            
@@ -75,7 +89,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 			
 			 angular.forEach($scope.products, function(value, key){
                 var val = value;
-                console.log("var"+val)
+                //console.log("var"+val)
                 if(key!=="error")
                     $scope.carList.push({'data':key,'value':value});
                 else
@@ -141,9 +155,9 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 				
 				 angular.forEach($scope.products, function(value, key){
 				 console.log(value);
-				 $scope.test=true;
-				 $scope.myVariableTest=value;
-				alert("Congrats your Booking have been placed Successful !! , Cars Available for carId after booking "+carIndex1+" is "+value);
+				
+				 //$scope.myVariableTest=value;
+				alert("Congrats your Booking have been placed Successful !! , Cars Available for Car Id "+ carIndex1+"after booking  is "+value);
 				//$scope.carList.push({'data':key,'value':value});
 				 });
 				
@@ -156,10 +170,10 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.getBookingData = function(time){ 
 					
     };
-	$scope.$watch('myVariableTest',function(newValue,oldValue){
+	/* $scope.$watch('myVariableTest',function(newValue,oldValue){
 	console.log("Watched");
 	$scope.myVariableTest=newValue;
-	},true);
+	},true); */
 	
 
 

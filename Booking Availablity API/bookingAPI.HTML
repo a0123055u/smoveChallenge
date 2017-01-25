@@ -86,19 +86,20 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 		<thead>
 		<tr>
 		
-		<th>Data Group ID:</th>
+		<th>Data Group ID:</th>		
 		<th>Cars Available Before</th>
-		<th>Cars Available Location{{myVariable}}</th>
-		<th>Cars Available After Booking</th>
+		<th>Cars Available Location</th>
+		
 		<th><input type="datetime-local" ng-model="time" /></th>
 		<th> <button class="btn btn-primary" data-ng-click="getBooking(time)">Get Car</button></th>
-			<th> <button class="btn btn-primary" data-ng-click="getBookingData(time)">Get Booking Data</button></th>
+			<th> <button class="btn btn-primary" data-ng-click="refresh()">Get Booking Data</button></th>
+			<th> <button class="btn btn-primary" data-ng-click="getDataAnalysis()">Get Data analysis</button></th>
 		
 		
 		</tr>
 		
 		</thead>
-		<tbody ng-repeat="car in carList">
+		<tbody ng-repeat="car in carList" ng-show="bookingFlag">
 		<tr ng-repeat="sub in car.value track by $index" >
 						
 			
@@ -107,8 +108,8 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 			
 			<td ng-show="{{sub.available_cars}}"  ng-model="sub.availableCars">{{sub.available_cars}}</td>
 			<td ng-show="{{sub.available_cars}}" ng-model="sub.LatLng">{{sub.location}}</td>
-			<td ng-show="{{sub.available_cars}}" ng-model="sub.avilAfter" ng-if="!test">{{myVariableTest=sub.available_cars}}</td>
-			<td ng-show="{{sub.available_cars}}" ng-model="sub.avilAfter" ng-if="test">{{myVariableTest}}</td>
+			
+			
 		
 			
 			<td ng-show="{{sub.available_cars}}" > <button class=" btn btn-info" data-ng-click="lookLocation(sub.location,time)"  class="relocate">Find Car </button></td>
@@ -117,16 +118,22 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 		</tr>
 		</tbody>
 		</table >
-		<table class="table1">
+		<table class="table" ng-show="dataAnalysisFlag">
 		<thead>
 		<tr>
 		
 		<th>Data  ID:</th>
+		<th></th>
 		<th>CAR  ID:</th>
+		<th></th>
 		<th>CAR Start Time:</th>
+		<th></th>
 		<th>CAR end Time</th>
+		<th></th>
 		<th>Total Time in Hrs</th>
+		<th></th>
 		<th>CAR Start Location</th>
+		<th></th>
 		<th>CAR End Location</th>
 		</tr>
 		</thead>
@@ -134,27 +141,39 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 		<tr ng-repeat="car1 in carList1">
 			
 		<td  > {{car1.id}}</td>
+		<td  ></td>
 		<td  > {{car1.car}}</td>
+		<td  ></td>
 		<td  > {{car1.start}}</td>
+		<td  ></td>
 		<td  > {{car1.end}}</td>
-		<td> {{(car1.end-car1.start)/4}}
+		<td  ></td>
+		<td> {{(car1.end-car1.start)/4}}</td>
+		<td  ></td>
 		<td  > {{car1.start_location}}</td>
+		<td  ></td>
 		<td  > {{car1.end_location}}</td>
-		
 		</tr>
+		</tbody>		
+		</table>
+		<table class="table" ng-show="detailedAnalysis">	
+		
 		<thead>
 		<th> Car No</th>
 		<th> Frequency of Usage</th>
 		</thead>
+		<tbody >
 		<tr ng-repeat ="count in counts track by $index">
 		<td>{{count.id}}</td>  
 		<td>{{count.count}}</td>
 		</tr>
 		</tbody>
-		
-		
 		</table>
-		<canvas id="myChart"></canvas>
+		
+		
+		
+		
+		<canvas id="myChart" ng-show="detailedAnalysis"></canvas>
 	
 		<div>
 		<script> 
