@@ -13,55 +13,51 @@
 	<script src="lib/bootstrap.min.js"></script>
 	<link rel="stylesheet" src="lib/bootstrap.min.css" media="screen">
 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
- integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
- crossorigin="anonymous">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<title>Car Booking App</title>
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" 
-integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-	<title>Car Location App</title>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>        
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">	 
+	     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>        
          <script src="lib/angular.js"></script>
-         	<script src="controllers/BookingAPIController.js"></script>
-			   <script src="lib/bootstrap.min.js"></script>
-			   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+		 <script src="controllers/BookingAPIController.js"></script>
+		 <script src="lib/bootstrap.min.js"></script>			  
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 	</head>
 		<body>
 		
       
 		<div class="container" ng-controller="bookingAPICtrl" class ="form-control">
-		<h3> Car Location App</h3>
+		<h3> Car Booking App</h3>
 		
     <div id="map"></div>
     <script>
 	
-	 var map;
-	 var marker;
-	  var markers = [];
+			var map;
+			 var marker;
+			  var markers = [];
 	  //used google map API to first locate my location 
-	  function initMap() {
-        var uluru = {lat: 1.2879881666, lng: 103.792225333};
-       map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 11,
-          center: uluru
-        });
-		 var infoWindow = new google.maps.InfoWindow({map: map});
-		 if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+				function initMap() {
+						var uluru = {lat: 1.2879881666, lng: 103.792225333};
+					   map = new google.maps.Map(document.getElementById('map'), {
+						  zoom: 11,
+						  center: uluru
+						});
+						 var infoWindow = new google.maps.InfoWindow({map: map});
+						 if (navigator.geolocation) {
+						  navigator.geolocation.getCurrentPosition(function(position) {
+							var pos = {
+							  lat: position.coords.latitude,
+							  lng: position.coords.longitude
+							};
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
+							infoWindow.setPosition(pos);
+							infoWindow.setContent('Location found.');
+							map.setCenter(pos);
+						  }, function() {
+							handleLocationError(true, infoWindow, map.getCenter());
+						  });
+						} else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
         }
@@ -79,9 +75,7 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 	  
 	  
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAize8URcTsoAqFrKFdmf24_5jm72SVhQ8&callback=initMap">
-    </script>
+    <script async defer   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAize8URcTsoAqFrKFdmf24_5jm72SVhQ8&callback=initMap">    </script>
 		<table class="table">
 		<thead>
 		<tr>
@@ -164,9 +158,11 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 		</thead>
 		<tbody >
 		<tr ng-repeat ="count in counts track by $index">
+		
 		<td>{{count.id}}</td>  
 		<td>{{count.count}}</td>
 		</tr>
+		<input type="hidden" id="countArray" name="someData" value="{{countArray}}" />
 		</tbody>
 		</table>
 		
@@ -175,30 +171,33 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 		
 		<canvas id="myChart" ng-show="detailedAnalysis"></canvas>
 	
+	
 		<div>
 		<script> 
+		var e = document.getElementById('myBookingApp');     
+		var $scope = angular.element(e).scope();
 		var result=[];
-		for(var test = 1;test<140;test++){
-		result.push(test);
-		}
+				for(var test = 1;test<140;test++){
+				result.push(test);
+				}
 		
-		var ctx = document.getElementById('myChart').getContext('2d');
-				var myChart = new Chart(ctx, {
-				
-  type: 'bar',
-  data: {
-    labels: result,//[1,2,3],
-    datasets: [{
-      label: 'CAR NO',
-      data: result,
-      backgroundColor: "rgba(153,255,51,0.4)"
-    }, {
-      label: 'Booking',
-      data:angular.element(document.querySelector('[ng-controller="bookingAPICtrl"]')).scope().counts,
-      backgroundColor: "rgba(255,153,0,0.4)"
-    }]
-  }
-});
+			var ctx = document.getElementById('myChart').getContext('2d');
+					var myChart = new Chart(ctx, {				
+						  type: 'bar',
+						  data: {
+							labels:result,//[1,2,3],
+							datasets: [{
+							  label: 'CAR NO',
+							  data: result,
+							  backgroundColor: "rgba(153,255,51,0.4)"
+							}, {
+							  label: 'Frequency',
+							  data:document.getElementById('countArray').value,
+							  backgroundColor: "rgba(255,153,0,0.4)"
+							}]
+						  }
+						});
+			console.log("VALUE"+document.getElementById('countArray').value);
 		</script>
 		
 		 

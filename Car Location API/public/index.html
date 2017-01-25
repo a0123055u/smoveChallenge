@@ -86,14 +86,15 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 		<th>Car No:</th>
 		<th>Latitude:</th>
 		<th>Longitude</th>
-		<th> <button class="btn btn-primary" data-ng-click="getCar()">Get Car</button></th>
+		<th> <button class="btn btn-primary" data-ng-click="getCar()">Get Car Off Trip</button></th>
+		<th> <button class="btn btn-primary" data-ng-click="getCarOnTrip()">Get Car On Trip</button></th>
 		
 		
 		</tr>
 		
 		</thead>
 		<tbody ng-repeat="car in carList">
-		<tr ng-repeat="sub in car.value track by $index" >
+		<tr ng-show="offTrip" ng-repeat="sub in car.value track by $index" >
 						
 			<td ng-show={{!sub.is_on_trip}}> {{sub.id}}</td>
 			<td ng-show={{!sub.is_on_trip}} id="markerLat"> {{sub.latitude}}{{$index}}</td>
@@ -103,11 +104,21 @@ integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En
 			<td  ng-show={{!sub.is_on_trip}}> <button class=" btn btn-info" data-ng-click="lookLocation(sub.latitude,sub.longitude)"  class="relocate">Relocate </button></td>
 			
 		</tr>
+		<tr ng-show="onTrip" ng-repeat="sub in car.value track by $index" >
+						
+			<td ng-show={{sub.is_on_trip}}> {{sub.id}}</td>
+			<td ng-show={{sub.is_on_trip}} id="markerLat"> {{sub.latitude}}{{$index}}</td>
+			<td ng-show={{sub.is_on_trip}}  id="markerLng"> {{sub.longitude}}</td>
+		
+			
+			<td  ng-show={{sub.is_on_trip}}> <button class=" btn btn-info" data-ng-click="lookLocation(sub.latitude,sub.longitude)"  class="relocate">Relocate </button></td>
+			
+		</tr>
 		</tbody>
 		</table>
 	
 		<div>
-		<h4> Preview</h4>
+		<h4> </h4>
 		
 		 
 		</div>

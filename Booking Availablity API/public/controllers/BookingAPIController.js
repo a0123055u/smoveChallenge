@@ -1,5 +1,5 @@
 var myApp = angular.module('myBookingApp',[]);
-myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
+myApp.controller('bookingAPICtrl', ['$scope', '$http',function($scope, $http) {
     
    
     $scope.carList=[];
@@ -10,7 +10,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 	 $scope.bookingFlag=false;
 	 $scope.dataAnalysisFlag=true;
 	 $scope.detailedAnalysis=false;
-	 console.log('got into server');
+	 //console.log('got into server');
             $http.get('/BookingData').success(function(response){
             console.log('got data from server');
             $scope.carList1=response;
@@ -23,6 +23,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
            $scope.sumOfCar=[];
 		   sumOfCar=[];
 			var carHoursUsedMap = [] ;
+			var sumOfCarFrequencyArray=[];
 			
 			 angular.forEach($scope.products, function(value, key){
 					if(value.car!=null){
@@ -50,11 +51,13 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 				var countMap = [];
 				
 				for(var t=1;t<140;t++){
-						console.log("Count of "+t+" -"+ counts[t]);
+						//console.log("Count of "+t+" -"+ counts[t]);
 						countMap.push({id:t,count:counts[t]});
+						sumOfCarFrequencyArray.push(counts[t]);
 						//console.log(" count of "+counts[t]);
 						}
 						$scope.counts=countMap;
+						$scope.countArray=sumOfCarFrequencyArray;
 				
             });
         
@@ -64,7 +67,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 	 $scope.bookingFlag=false;
 	 $scope.dataAnalysisFlag=false;
 	 $scope.detailedAnalysis=true;
-	
+	 
 	
 	}
     
@@ -80,7 +83,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
             $http.get('https://challenge.smove.sg/availability?startTime='+unixStartTime+'&endTime='+unixEndTime).success(function(response){
             console.log('got data from server');
            	$scope.products=response;
-			console.log(response.data);
+			//console.log(response.data);
 			
 			
 			
@@ -157,7 +160,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http', function($scope, $http) {
 				 console.log(value);
 				
 				 //$scope.myVariableTest=value;
-				alert("Congrats your Booking have been placed Successful !! , Cars Available for Car Id "+ carIndex1+"after booking  is "+value);
+				alert("Congrats your Booking have been placed Successfully !! , Cars Available for Car Id "+ carIndex1+"after booking  is "+value);
 				//$scope.carList.push({'data':key,'value':value});
 				 });
 				

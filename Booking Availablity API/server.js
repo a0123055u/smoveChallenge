@@ -39,7 +39,7 @@ console.log("#############");
 		console.log(value.id);
         //do something with value;
 		 val ={dataId:value.id, carsAvailable:value.availableCars,latitude:value.latitude,longitute:value.longitute,date:value.dateTime,bookingCount:value.noOfBooking};
-		console.log(val);
+		//console.log(val);
 		}
 	}
 	console.log(val);

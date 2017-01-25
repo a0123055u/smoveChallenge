@@ -6,9 +6,13 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
     
 //Used this method to consume the REST API and display them to user.
     $scope.getCar = function(){    
+			
+				$scope.offTrip=true;
+				$scope.onTrip=false;
+			
             $http.get('https://challenge.smove.sg/locations').success(function(response){
             console.log('got data from server');
-            $scope.carList=response.data;
+            $scope.carList=[];
 			$scope.products=response;
 			console.log(response.data);
            
@@ -16,7 +20,7 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
 			
 			 angular.forEach($scope.products, function(value, key){
                 var val = value;
-                console.log("var"+val)
+              //  console.log("var"+val)
                 if(key!=="error")
                     $scope.carList.push({'data':key,'value':value});
                 else
@@ -30,6 +34,11 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
             });
         
     };
+	$scope.getCarOnTrip = function(){
+				$scope.offTrip=false;
+				$scope.onTrip=true;
+	}
+	
    // using the relocate button click the user can find the distance between him and the CARS. This will be quiet useful when a person goes for booking.
 //Literally the user can find the distance between him(Location Found) and car (Red Marker)   
     $scope.lookLocation= function(latCurr,lngCurr){
