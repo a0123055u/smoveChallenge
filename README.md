@@ -5,7 +5,7 @@ Booking Availablity API and Booking Data task both are done at the Booking Avail
 
 In order to run Booking Availablity API need node js, Angular js, Chart.js and MongoDb. 
 
-1) Once you check out the entire project, First start the MongoDb server. If you don't have mongoDb pls install and Go to Bin folder of MonfoDb and 
+1) Once you check out the entire project, First start the MongoDb server. If you don't have mongoDb pls install and Go to Bin folder of MongoDb and 
 fire this command - mongod
 2) Need Node js also for this if you don't have please install it. Then move to the root folder of the Booking Availablity API project and type this
 command  -  node server.js. This in turn will start server in the port 3300. 
