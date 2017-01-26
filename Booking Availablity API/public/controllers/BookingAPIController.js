@@ -1,11 +1,11 @@
 var myApp = angular.module('myBookingApp',[]);
-myApp.controller('bookingAPICtrl', ['$scope', '$http',function($scope, $http) {
-    
+myApp.controller('bookingAPICtrl', ['$scope', '$http',function($scope, $http) {    
    
     $scope.carList=[];
 	
 	 $scope.myVariableTest=0;
 	 var sumOfCar=[];
+	 var sumOfCarFrequencyArray=[];
 	 $scope.refresh = function(){
 	 $scope.bookingFlag=false;
 	 $scope.dataAnalysisFlag=true;
@@ -23,7 +23,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http',function($scope, $http) {
            $scope.sumOfCar=[];
 		   sumOfCar=[];
 			var carHoursUsedMap = [] ;
-			var sumOfCarFrequencyArray=[];
+			
 			
 			 angular.forEach($scope.products, function(value, key){
 					if(value.car!=null){
@@ -67,6 +67,8 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http',function($scope, $http) {
 	 $scope.bookingFlag=false;
 	 $scope.dataAnalysisFlag=false;
 	 $scope.detailedAnalysis=true;
+	 $scope.countArray=sumOfCarFrequencyArray;
+	 
 	 
 	
 	}
@@ -76,6 +78,7 @@ myApp.controller('bookingAPICtrl', ['$scope', '$http',function($scope, $http) {
 			var date = new Date(time);
 			var millTime= date.getTime();
 			var unixStartTime = millTime/1000;
+			console.log(unixStartTime);
 			var unixEndTime = unixStartTime+900;
 			 $scope.bookingFlag=true;
 			 $scope.dataAnalysisFlag=false;

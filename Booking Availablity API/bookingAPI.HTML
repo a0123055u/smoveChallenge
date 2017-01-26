@@ -87,7 +87,7 @@
 		<th><input type="datetime-local" ng-model="time" /></th>
 		<th> <button class="btn btn-primary" data-ng-click="getBooking(time)">Get Car</button></th>
 			<th> <button class="btn btn-primary" data-ng-click="refresh()">Get Booking Data</button></th>
-			<th> <button class="btn btn-primary" data-ng-click="getDataAnalysis()">Get Data analysis</button></th>
+			<th> <button class="btn btn-primary" data-ng-click="getDataAnalysis()" id="dataAnalysis">Get Data analysis</button></th>
 		
 		
 		</tr>
@@ -162,18 +162,20 @@
 		<td>{{count.id}}</td>  
 		<td>{{count.count}}</td>
 		</tr>
-		<input type="hidden" id="countArray" name="someData" value="{{countArray}}" />
+		<input type="hidden" id="countArray" ng-value="countArray" name="someData" />{{countArray}}
 		</tbody>
 		</table>
 		
 		
 		
 		
-		<canvas id="myChart" ng-show="detailedAnalysis"></canvas>
+		<canvas id="myChart" ng-show="detailedAnalysis" ></canvas>
 	
 	
 		<div>
 		<script> 
+		
+		document.getElementById('dataAnalysis').onclick = function(){
 		var e = document.getElementById('myBookingApp');     
 		var $scope = angular.element(e).scope();
 		var result=[];
@@ -184,11 +186,11 @@
 			var ctx = document.getElementById('myChart').getContext('2d');
 					var myChart = new Chart(ctx, {				
 						  type: 'bar',
-						  data: {
-							labels:result,//[1,2,3],
+						  data: {								
+							labels:[1,2,3,4,5,6,7,8,9,10],//[1,2,3],
 							datasets: [{
 							  label: 'CAR NO',
-							  data: result,
+							  data:result,
 							  backgroundColor: "rgba(153,255,51,0.4)"
 							}, {
 							  label: 'Frequency',
@@ -197,7 +199,8 @@
 							}]
 						  }
 						});
-			console.log("VALUE"+document.getElementById('countArray').value);
+			//console.log("VALUE"+document.getElementById('countArray').value);
+			}
 		</script>
 		
 		 
